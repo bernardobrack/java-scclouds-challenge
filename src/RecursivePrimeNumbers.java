@@ -16,7 +16,7 @@ public class RecursivePrimeNumbers {
         }
 
         ArrayList<Integer> primeNumbersArray = getAllPrimeNumbersUpTo(n);
-        System.out.println(primeNumbersArray.toString());
+        System.out.println(primeNumbersArray);
 
     }
 

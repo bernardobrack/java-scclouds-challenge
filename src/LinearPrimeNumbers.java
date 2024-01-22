@@ -1,6 +1,4 @@
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class LinearPrimeNumbers {
     public static void main(String[] args) {
@@ -18,7 +16,7 @@ public class LinearPrimeNumbers {
         }
 
         ArrayList<Integer> primeNumbersArray = getAllPrimeNumbersUpTo(n);
-        System.out.println(primeNumbersArray.toString());
+        System.out.println(primeNumbersArray);
 
     }
 
