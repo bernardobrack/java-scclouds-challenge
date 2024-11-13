@@ -1,26 +1,21 @@
+import java.util.HashMap;
+
 public class RecursiveFibonacci {
-    public static void main(String[] args) {
-        if(args.length == 0) return;
-        int n;
-        try {
-            n = Integer.parseInt(args[0]);
-        } catch(NumberFormatException e) {
-            System.out.println("Please provide a number as the first argument");
-            return;
-        }
-        if(n<0) return;
-        System.out.printf("fib(%d): %d", n, fib(n));
+
+    public static int calculate(Integer n) throws IllegalArgumentException {
+        if(n<0) throw new IllegalArgumentException("The number is expected to be at least 0");
+        if(n==0) return 0;
+        if(n<=2) return 1;
+        HashMap<Integer, Integer> memo = new HashMap<>();
+        return RecursiveFibonacci.calculate(n-1, memo)+RecursiveFibonacci.calculate(n-2, memo);
+
 
     }
-
-    public static int fib(int n) {
-        if(n<=1) return n;
-        return(recursiveFib(n-2, 0, 1));
-
+    private static int calculate(Integer n, HashMap<Integer, Integer> memo) {
+        if(memo.containsKey(n)) return memo.get(n);
+        if(n<=2) return 1;
+        memo.put(n, calculate(n-1, memo) + calculate(n-2, memo));
+        return memo.get(n);
     }
 
-    public static int recursiveFib(int n, int prev, int curr) {
-        if(n==0) return prev+curr;
-        return recursiveFib(n-1, curr, prev+curr);
-    }
 }
