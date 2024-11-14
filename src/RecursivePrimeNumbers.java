@@ -1,41 +1,34 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class RecursivePrimeNumbers {
-    public static void main(String[] args) {
-        if(args.length == 0) return;
-        int n;
-        try {
-            n = Integer.parseInt(args[0]);
-        } catch(NumberFormatException e) {
-            System.out.println("Please provide a number as the first argument");
-            return;
-        }
-        if(n<=1) {
-            System.out.println("Please provide an integer greater than 1 as the first argument");
-            return;
-        }
 
-        ArrayList<Integer> primeNumbersArray = getAllPrimeNumbersUpTo(n);
-        System.out.println(primeNumbersArray);
 
+    public static ArrayList<Integer> calculate(Integer n) {
+        if(n<=1) return new ArrayList<>();
+        ArrayList<Integer> primeNumbers = new ArrayList<>();
+        HashSet<Integer> nonPrimeNumbers = new HashSet<>();
+        return calculate(n, 2, primeNumbers, nonPrimeNumbers);
     }
-
-    public static ArrayList<Integer> getAllPrimeNumbersUpTo(int n) {
-        ArrayList<Integer> answer = new ArrayList<>();
-        recursiveGetAllPrimeNumbersUpTo(n, 2, answer);
-        return answer;
-    }
-
-    public static void recursiveGetAllPrimeNumbersUpTo(int n, int curr, ArrayList<Integer> array) {
+    private static ArrayList<Integer> calculate(Integer n, Integer curr, ArrayList<Integer> primeNumbers, HashSet<Integer> nonPrimeNumbers) {
+        if(curr > n) return primeNumbers;
+        if(nonPrimeNumbers.contains(curr)) return calculate(n, curr+1, primeNumbers, nonPrimeNumbers);
         if(isPrime(curr)) {
-            array.add(curr);
+            primeNumbers.add(curr);
         }
-        if(curr < n) recursiveGetAllPrimeNumbersUpTo(n, ++curr, array);
+        for(int i = curr; i <=n; i+=curr) {
+            nonPrimeNumbers.add(i);
+        }
+        return calculate(n, curr+1, primeNumbers, nonPrimeNumbers);
     }
-    public static boolean isPrime(int n) {
-        for(int i = 2; i < n; i++) {
-            if(n % i ==0) return false;
-        }
-        return true;
+    public static boolean isPrime(Integer n) {
+        if(n<=1) return false;
+        if(n==2) return true;
+        return isPrime(n, 2);
+    }
+    private static boolean isPrime(Integer n, Integer nextToDivide) {
+        if(nextToDivide*nextToDivide > n) return true;
+        if(n%nextToDivide == 0) return false;
+        return isPrime(n, nextToDivide+1);
     }
 }
